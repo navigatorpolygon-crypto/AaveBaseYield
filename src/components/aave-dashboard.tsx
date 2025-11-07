@@ -8,9 +8,25 @@ import { Landmark, Link, Wallet } from "lucide-react";
 import { BalanceCard } from "./balance-card";
 import { DepositCard } from "./deposit-card";
 import { PositionCard } from "./position-card";
+import { WalkthroughModal } from "./walkthrough-modal";
+import { useWalkthroughState } from "@/hooks/use-walkthrough-state";
+import { useEffect } from "react";
 
 export function AaveDashboard() {
   const { isConnected, address } = useAccount();
+  const {
+    hasSeenWalkthrough,
+    showWalkthrough,
+    handleShowWalkthrough,
+    handleCloseWalkthrough,
+  } = useWalkthroughState();
+
+  // Show walkthrough when user connects wallet for the first time
+  useEffect(() => {
+    if (isConnected && !hasSeenWalkthrough) {
+      handleShowWalkthrough();
+    }
+  }, [isConnected, hasSeenWalkthrough, handleShowWalkthrough]);
 
   return (
     <div className="flex flex-col gap-8">
@@ -57,6 +73,12 @@ export function AaveDashboard() {
             Learn more about Aave <Link className="h-3 w-3" />
         </a>
       </footer>
+
+      {/* Walkthrough Modal */}
+      <WalkthroughModal 
+        isOpen={showWalkthrough}
+        onClose={handleCloseWalkthrough}
+      />
     </div>
   );
 }
