@@ -9,7 +9,19 @@ export const metadata: Metadata = {
   title: 'AaveBaseYield',
   description: 'One-Click Aave Yield Deposit on Base Mainnet',
   icons: {
-    icon: '/cat.jpg',
+    icon: [
+      {
+        url: '/cat.jpg',
+        sizes: '32x32',
+        type: 'image/jpeg'
+      },
+      {
+        url: '/cat.jpg',
+        sizes: '16x16',
+        type: 'image/jpeg'
+      }
+    ],
+    apple: '/cat.jpg',
   },
 };
 
