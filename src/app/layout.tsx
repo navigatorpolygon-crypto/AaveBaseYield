@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Web3Provider } from '@/components/providers/web3-provider';
 import { Toaster } from '@/components/ui/toaster';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { ErrorBoundary } from '@/components/error-boundary';
 
 export const metadata: Metadata = {
   title: 'AaveBaseYield',
@@ -35,10 +37,14 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased">
-        <Web3Provider>
-          {children}
-          <Toaster />
-        </Web3Provider>
+        <ErrorBoundary>
+          <Web3Provider>
+            <TooltipProvider>
+              {children}
+              <Toaster />
+            </TooltipProvider>
+          </Web3Provider>
+        </ErrorBoundary>
       </body>
     </html>
   );

@@ -21,11 +21,12 @@ const wagmiAdapter = new WagmiAdapter({
 
 const config = wagmiAdapter.wagmiConfig;
 
+
 const metadata = {
   name: 'AaveBaseYield',
   description: 'One-Click Aave Yield Deposit on Base Mainnet',
-  url: 'https://aave-base-yield.web.app', // replace with your app url
-  icons: ['/cat.jpg'] // app icon
+  url: 'https://aave-base-yield.vercel.app',
+  icons: ['/cat.jpg'],
 };
 
 createAppKit({
