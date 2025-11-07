@@ -21,7 +21,9 @@ export function AaveDashboard() {
           </div>
           <h1 className="font-headline">AaveBaseYield</h1>
         </div>
-        <ConnectWallet />
+        <div>
+          <ConnectWallet />
+        </div>
       </header>
       
       {isConnected && address ? (
