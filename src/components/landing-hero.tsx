@@ -21,10 +21,12 @@ export function LandingHero() {
           Earn optimal yields with one-click deposits into Aave&apos;s lending protocol on Base. Simple, secure, and efficient.
         </p>
         <div className="flex justify-center gap-4">
-          <Button size="lg" className="gap-2">
-            Start Earning <ArrowRight className="h-4 w-4" />
+          <Button size="lg" className="gap-2" asChild>
+            <appkit-button>Connect Wallet <ArrowRight className="h-4 w-4" /></appkit-button>
           </Button>
-          <Button size="lg" variant="outline">Learn More</Button>
+          <Button size="lg" variant="outline" asChild>
+            <a href="https://aave.com/" target="_blank" rel="noopener noreferrer">Learn More</a>
+          </Button>
         </div>
       </section>
 
