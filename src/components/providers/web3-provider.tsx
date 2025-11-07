@@ -25,7 +25,7 @@ const metadata = {
   name: 'AaveBaseYield',
   description: 'One-Click Aave Yield Deposit on Base Mainnet',
   url: 'https://aave-base-yield.web.app', // replace with your app url
-  icons: ['https://aave-base-yield.web.app/icon.png'] // replace with your app icon
+  icons: ['/cat.jpg'] // app icon
 };
 
 createAppKit({

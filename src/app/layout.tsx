@@ -6,6 +6,9 @@ import { Toaster } from '@/components/ui/toaster';
 export const metadata: Metadata = {
   title: 'AaveBaseYield',
   description: 'One-Click Aave Yield Deposit on Base Mainnet',
+  icons: {
+    icon: '/cat.jpg',
+  },
 };
 
 declare global {
