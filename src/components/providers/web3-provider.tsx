@@ -13,9 +13,19 @@ if (!projectId) {
   throw new Error('NEXT_PUBLIC_PROJECT_ID is not set');
 }
 
+
 const wagmiAdapter = new WagmiAdapter({
   projectId,
-  networks: [base],
+  networks: [
+    {
+      ...base,
+      rpcUrls: {
+        default: {
+          http: ["https://eth-mainnet.g.alchemy.com/v2/gYSikyrGiHWg-0Je4zVby"],
+        },
+      },
+    },
+  ],
   ssr: true,
 });
 
