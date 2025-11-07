@@ -10,7 +10,7 @@ import { Skeleton } from "./ui/skeleton";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { parseUnits, maxUint256 } from "viem";
+import { parseUnits, maxUint256, formatUnits } from "viem";
 import { AAVE_POOL_ABI, AAVE_POOL_ADDRESS, ETH_DECIMALS, USDC_DECIMALS, USDC_ADDRESS, WETH_ADDRESS } from "@/lib/constants";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
@@ -30,7 +30,7 @@ export function PositionCard({ address }: { address: `0x${string}` }) {
   const handleWithdraw = async () => {
     if (!withdrawAmount) return;
 
-    const isMax = withdrawAmount.toLowerCase() === 'max';
+    const isMax = withdrawAmount.toLowerCase() === 'max' || parseFloat(withdrawAmount) === parseFloat(formatUnits(currentBalance, decimals));
     const amountToWithdraw = isMax ? maxUint256 : parseUnits(withdrawAmount, decimals);
 
     try {
@@ -61,7 +61,7 @@ export function PositionCard({ address }: { address: `0x${string}` }) {
   };
   
   const handleMax = () => {
-    setWithdrawAmount(formatBigInt(currentBalance, decimals, 6));
+    setWithdrawAmount(formatUnits(currentBalance, decimals));
   };
 
 
@@ -113,7 +113,7 @@ export function PositionCard({ address }: { address: `0x${string}` }) {
             <Button 
                 className="w-full" 
                 onClick={handleWithdraw} 
-                disabled={!withdrawAmount || isPending || isConfirming}
+                disabled={!withdrawAmount || parseFloat(withdrawAmount) <= 0 || isPending || isConfirming}
             >
                 {isPending || isConfirming ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

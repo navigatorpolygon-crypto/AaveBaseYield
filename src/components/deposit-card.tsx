@@ -9,7 +9,7 @@ import { useAaveData } from "@/hooks/use-aave-data";
 import { Skeleton } from "./ui/skeleton";
 import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { useToast } from "@/hooks/use-toast";
-import { parseUnits, maxUint256 } from "viem";
+import { parseUnits, maxUint256, formatUnits } from "viem";
 import { AAVE_POOL_ABI, AAVE_POOL_ADDRESS, ERC20_ABI, USDC_ADDRESS, WETH_ADDRESS, ETH_DECIMALS, USDC_DECIMALS } from "@/lib/constants";
 import { PlusCircle, Loader2 } from "lucide-react";
 
@@ -27,7 +27,7 @@ export function DepositCard({ address }: { address: `0x${string}` }) {
   const currentBalance = asset === 'ETH' ? ethBalance : usdcBalance;
   const decimals = asset === 'ETH' ? ETH_DECIMALS : USDC_DECIMALS;
   const needsApproval = useMemo(() => {
-    if (asset !== 'USDC' || !amount) return false;
+    if (asset !== 'USDC' || !amount || parseFloat(amount) <= 0) return false;
     const amountWei = parseUnits(amount, decimals);
     return amountWei > usdcAllowance;
   }, [asset, amount, usdcAllowance, decimals]);
@@ -103,8 +103,9 @@ export function DepositCard({ address }: { address: `0x${string}` }) {
   };
 
   const handleMax = () => {
-    const formattedBalance = formatUnits(currentBalance, decimals);
-    setAmount(formattedBalance);
+    if (currentBalance > 0n) {
+      setAmount(formatUnits(currentBalance, decimals));
+    }
   };
   
   const actionText = () => {
@@ -123,7 +124,7 @@ export function DepositCard({ address }: { address: `0x${string}` }) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs value={asset} onValueChange={(value) => setAsset(value as 'ETH' | 'USDC')}>
+        <Tabs value={asset} onValueChange={(value) => {setAmount(''); setAsset(value as 'ETH' | 'USDC')}}>
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="USDC">USDC</TabsTrigger>
             <TabsTrigger value="ETH">ETH</TabsTrigger>
@@ -146,7 +147,7 @@ export function DepositCard({ address }: { address: `0x${string}` }) {
                         onChange={(e) => setAmount(e.target.value)}
                         disabled={isPending || isConfirming}
                     />
-                    <Button variant="outline" onClick={handleMax} disabled={isPending || isConfirming}>Max</Button>
+                    <Button variant="outline" onClick={handleMax} disabled={isPending || isConfirming || currentBalance === 0n}>Max</Button>
                 </div>
             </div>
         </div>

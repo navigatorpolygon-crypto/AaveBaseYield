@@ -25,5 +25,6 @@ export function formatBigInt(value: bigint, decimals: number, displayDecimals = 
   }
   
   const truncatedFraction = fraction.slice(0, displayDecimals);
-  return `${integer}.${truncatedFraction.padEnd(displayDecimals, '0')}`;
+  // Don't pad with zeros if the fraction is shorter than displayDecimals
+  return `${integer}.${truncatedFraction}`;
 }
