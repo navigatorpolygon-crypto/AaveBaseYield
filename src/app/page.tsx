@@ -1,3 +1,4 @@
+"use client";
 import { AaveDashboard } from '@/components/aave-dashboard';
 import { LandingHero } from '@/components/landing-hero';
 import { useAccount } from 'wagmi';
